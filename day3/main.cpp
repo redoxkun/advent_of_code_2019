@@ -135,7 +135,7 @@ auto get_intersections(const std::vector<std::pair<int, int>>& wire1, const std:
 
 auto get_distance(const std::pair<int, int>& point) -> int
 {
-	return static_cast<long long>(std::abs(point.first)) + static_cast<long long>(std::abs(point.second));
+	return std::abs(point.first) + std::abs(point.second);
 }
 
 auto get_closest_intersection(const std::vector<std::pair<int, int>>& intersections) -> std::pair<int, int>
