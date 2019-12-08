@@ -23,9 +23,6 @@ auto get_shortest_distance(const orbit_tree& tree, const std::string& top, int d
 							int& distance) -> std::pair<int, int>
 {
 	std::pair<int, int> result{-1, -1};
-
-	if (distance != -1)
-		return result;
 	
 	if (top == node1)
 		result.first = depth;
@@ -96,7 +93,6 @@ int main(int argc, char* argv[])
 
 	auto total_orbits = 0; 
 	get_total_orbits(tree, "COM", 0, total_orbits);
-
 	std::cout << "Total orbits: " << total_orbits << std::endl;
 
 	auto distance = -1;
