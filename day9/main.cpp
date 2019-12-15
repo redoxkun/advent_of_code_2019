@@ -164,7 +164,7 @@ auto jmp_if_true(computer_state& computer) -> void
 		computer.pc += 3;
 		
 	if constexpr (show_asm)
-			std::cout << "jit " << first_param << ", " << second_param << std::endl;
+		std::cout << "jit " << first_param << ", " << second_param << std::endl;
 }
 
 auto jmp_if_false(computer_state& computer) -> void

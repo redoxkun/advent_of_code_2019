@@ -74,10 +74,11 @@ auto add(std::vector<int>& memory, int& pc) -> void
 	const auto first_param  = (immediate_1st_param(memory[pc])) ? memory[pc + 1] : memory[memory[pc + 1]];
 	const auto second_param = (immediate_2nd_param(memory[pc])) ? memory[pc + 2] : memory[memory[pc + 2]];
 	memory[memory[pc + 3]] = first_param + second_param;
-	pc += 4;
 
 	if constexpr (show_asm)
 		std::cout << "add " << memory[pc + 3] << ", " << first_param << ", " << second_param << std::endl;
+
+	pc += 4;
 }
 
 auto mul(std::vector<int>& memory, int& pc) -> void
@@ -85,55 +86,60 @@ auto mul(std::vector<int>& memory, int& pc) -> void
 	const auto first_param  = (immediate_1st_param(memory[pc])) ? memory[pc + 1] : memory[memory[pc + 1]];
 	const auto second_param = (immediate_2nd_param(memory[pc])) ? memory[pc + 2] : memory[memory[pc + 2]];
 	memory[memory[pc + 3]] = first_param * second_param;
-	pc += 4;
 
 	if constexpr (show_asm)
 		std::cout << "mul " << memory[pc + 3] << ", " << first_param << ", " << second_param << std::endl;
+	
+	pc += 4;
 }
 
 auto in(std::vector<int>& memory, int& pc, const std::vector<int>& input_data, int& input_index) -> void
 {
 	memory[memory[pc + 1]] = input_data[input_index++];
-	pc += 2;
 
 	if constexpr (show_asm)
 		std::cout << "in " << memory[pc + 1] << std::endl;
+
+	pc += 2;
 }
 
 auto out(std::vector<int>& memory, int& pc, std::vector<int>& output_data) -> void
 {
 	const auto first_param  = (immediate_1st_param(memory[pc])) ? memory[pc + 1] : memory[memory[pc + 1]];
 	output_data.push_back(first_param);
-	pc += 2;
 
 	if constexpr (show_asm)
 		std::cout << "out " << first_param << std::endl;
+
+	pc += 2;
 }
 
 auto jmp_if_true(std::vector<int>& memory, int& pc) -> void
 {
 	const auto first_param  = (immediate_1st_param(memory[pc])) ? memory[pc + 1] : memory[memory[pc + 1]];
 	const auto second_param = (immediate_2nd_param(memory[pc])) ? memory[pc + 2] : memory[memory[pc + 2]];
+
+	if constexpr (show_asm)
+		std::cout << "jit " << first_param << ", " << second_param << std::endl;
+	
 	if (first_param != 0)
 		pc = second_param;
 	else
 		pc += 3;
-
-	if constexpr (show_asm)
-		std::cout << "jit " << first_param << ", " << second_param << std::endl;
 }
 
 auto jmp_if_false(std::vector<int>& memory, int& pc) -> void
 {
 	const auto first_param  = (immediate_1st_param(memory[pc])) ? memory[pc + 1] : memory[memory[pc + 1]];
 	const auto second_param = (immediate_2nd_param(memory[pc])) ? memory[pc + 2] : memory[memory[pc + 2]];
+
+	if constexpr (show_asm)
+		std::cout << "jif " << first_param << ", " << second_param << std::endl;
+	
 	if (first_param == 0)
 		pc = second_param;
 	else
-		pc += 3;
-		
-	if constexpr (show_asm)
-		std::cout << "jif " << first_param << ", " << second_param << std::endl;
+		pc += 3;		
 }
 
 auto lt(std::vector<int>& memory, int& pc) -> void
@@ -141,10 +147,11 @@ auto lt(std::vector<int>& memory, int& pc) -> void
 	const auto first_param  = (immediate_1st_param(memory[pc])) ? memory[pc + 1] : memory[memory[pc + 1]];
 	const auto second_param = (immediate_2nd_param(memory[pc])) ? memory[pc + 2] : memory[memory[pc + 2]];
 	memory[memory[pc + 3]] = (first_param < second_param) ? 1 : 0;	
-	pc += 4;
-	
+
 	if constexpr (show_asm)
 		std::cout << "lt  " << memory[pc + 3] << ", " << first_param << ", " << second_param << std::endl;
+		
+	pc += 4;	
 }
 
 auto eq(std::vector<int>& memory, int& pc) -> void
@@ -152,10 +159,11 @@ auto eq(std::vector<int>& memory, int& pc) -> void
 	const auto first_param  = (immediate_1st_param(memory[pc])) ? memory[pc + 1] : memory[memory[pc + 1]];
 	const auto second_param = (immediate_2nd_param(memory[pc])) ? memory[pc + 2] : memory[memory[pc + 2]];
 	memory[memory[pc + 3]] = (first_param == second_param) ? 1 : 0;
-	pc += 4;
 
 	if constexpr (show_asm)
 		std::cout << "eq  " << memory[pc + 3] << ", " << first_param << ", " << second_param << std::endl;
+	
+	pc += 4;
 }
 
 auto run_program(computer_state& computer, bool return_on_output) -> void
